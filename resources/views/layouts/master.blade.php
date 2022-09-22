@@ -1,60 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+		@include('layouts.head')
+	</head>
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="keywords" content="HTML5 Template" />
-    <meta name="description" content="Webmin - Bootstrap 4 & Angular 5 Admin Dashboard Template" />
-    <meta name="author" content="potenzaglobalsolutions.com" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    @include('layouts.head')
-</head>
+    <!-- main-content -->
+    <body class="layout-boxed">
 
-<body>
 
-    <div class="wrapper">
-
-        <!--=================================
- preloader -->
-
-        <div id="pre-loader">
-            <img src="assets/images/pre-loader/loader-01.svg" alt="">
-        </div>
-
-        <!--=================================
- preloader -->
-
+    <!-- BEGIN LOADER -->
+    <div id="load_screen"> <div class="loader"> <div class="loader-content">
+                <div class="spinner-grow align-self-center"></div>
+            </div></div></div>
+    <!--  END LOADER -->
         @include('layouts.main-header')
 
-        @include('layouts.main-sidebar')
+    <!--  BEGIN MAIN CONTAINER  -->
+    <div class="main-container " id="container">
+        <div class="overlay"></div>
+        <div class="search-overlay"></div>
 
-        <!--=================================
- Main content -->
-        <!-- main-content -->
-        <div class="content-wrapper">
 
-            @yield('page-header')
+    @include('layouts.main-sidebar')
 
-            @yield('content')
 
-            <!--=================================
- wrapper -->
 
-            <!--=================================
- footer -->
+				@yield('page-header')
+        @include('layouts.flush-massage')
+				@yield('content')
 
-            @include('layouts.footer')
-        </div><!-- main content wrapper end-->
-    </div>
-    </div>
     </div>
 
-    <!--=================================
- footer -->
+    </div>
 
-    @include('layouts.footer-scripts')
+				@include('layouts.models')
 
-</body>
+                </div>
 
+    </div>
+
+    @include('layouts.footer')
+
+
+				@include('layouts.footer-scripts')
+
+    </div>
+    <!--  END CONTENT AREA  -->
+    </div>
+    <!-- END MAIN CONTAINER -->
+
+
+    </body>
 </html>
+
+<script>
+
+    setInterval(function() {
+        $("#notifications_count").load(window.location.href + " #notifications_count");
+        $("#unreadNotifications").load(window.location.href + " #unreadNotifications");
+    }, 5000);
+
+</script>

@@ -1,31 +1,32 @@
-<!-- jquery -->
-<script src="{{ URL::asset('assets/js/jquery-3.3.1.min.js') }}"></script>
-<!-- plugins-jquery -->
-<script src="{{ URL::asset('assets/js/plugins-jquery.js') }}"></script>
-<!-- plugin_path -->
-<script>
-    var plugin_path = 'js/';
 
-</script>
 
-<!-- chart -->
-<script src="{{ URL::asset('assets/js/chart-init.js') }}"></script>
-<!-- calendar -->
-<script src="{{ URL::asset('assets/js/calendar.init.js') }}"></script>
-<!-- charts sparkline -->
-<script src="{{ URL::asset('assets/js/sparkline.init.js') }}"></script>
-<!-- charts morris -->
-<script src="{{ URL::asset('assets/js/morris.init.js') }}"></script>
-<!-- datepicker -->
-<script src="{{ URL::asset('assets/js/datepicker.js') }}"></script>
-<!-- sweetalert2 -->
-<script src="{{ URL::asset('assets/js/sweetalert2.js') }}"></script>
-<!-- toastr -->
+
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+<script src="{{ asset('assets/src/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{ asset('assets/src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
+<script src="{{ asset('assets/src/plugins/src/mousetrap/mousetrap.min.js')}}"></script>
+<script src="{{ asset('assets/layouts/vertical-dark-menu/app.js')}}"></script>
+<!-- END GLOBAL MANDATORY STYLES -->
+
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script src="{{ asset('assets/src/plugins/src/editors/quill/quill.js')}}"></script>
+<script src="{{ asset('assets/src/plugins/src/filepond/filepond.min.js')}}"></script>
+<script src="{{ asset('assets/src/plugins/src/filepond/FilePondPluginFileValidateType.min.js')}}"></script>
+<script src="{{ asset('assets/src/plugins/src/filepond/FilePondPluginImageExifOrientation.min.js')}}"></script>
+<script src="{{ asset('assets/src/plugins/src/filepond/FilePondPluginImagePreview.min.js')}}"></script>
+<script src="{{ asset('assets/src/plugins/src/filepond/FilePondPluginImageCrop.min.js')}}"></script>
+<script src="{{ asset('assets/src/plugins/src/filepond/FilePondPluginImageResize.min.js')}}"></script>
+<script src="{{ asset('assets/src/plugins/src/filepond/FilePondPluginImageTransform.min.js')}}"></script>
+<script src="{{ asset('assets/src/plugins/src/filepond/filepondPluginFileValidateSize.min.js')}}"></script>
+
+<script src="{{ asset('assets/src/plugins/src/tagify/tagify.min.js')}}"></script>
+
+<script src="{{ asset('assets/src/assets/js/apps/blog-create.js')}}"></script>
+<!-- END PAGE LEVEL SCRIPTS -->
+
 @yield('js')
-<script src="{{ URL::asset('assets/js/toastr.js') }}"></script>
-<!-- validation -->
-<script src="{{ URL::asset('assets/js/validation.js') }}"></script>
-<!-- lobilist -->
-<script src="{{ URL::asset('assets/js/lobilist.js') }}"></script>
-<!-- custom -->
-<script src="{{ URL::asset('assets/js/custom.js') }}"></script>
+<!-- Sticky js -->
+<script src="{{URL::asset('assets/js/sticky.js')}}"></script>
+<!-- custom js -->
+<script src="{{URL::asset('assets/js/custom.js')}}"></script><!-- Left-menu js-->
+<script src="{{URL::asset('assets/plugins/side-menu/sidemenu.js')}}"></script>
