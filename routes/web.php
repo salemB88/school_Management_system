@@ -19,17 +19,15 @@ return view('dashboard');
 });
 
 
-Route::group(
-    ['middleware'=>['auth'],
-
-
-    ],
+Route::group(['middleware'=>['auth'],],
     function (){
         Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
 
         Route::resource('grade','App\Http\Controllers\GradeController');
+        Route::resource('class_room','App\Http\Controllers\ClassRoomController');
 
-});
+
+    });
 
 
 

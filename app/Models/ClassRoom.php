@@ -7,16 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
-class Grade extends Model
+class ClassRoom extends Model
 {
     use HasFactory, SoftDeletes,  Notifiable;
 
     public $fillable= [
         'name',
+        'grade_id',
         'description',
     ];
 
-    public function class_rooms(){
-        return $this->hasMany(ClassRoom::class);
+    public function grade(){
+        return $this->belongsTo(Grade::class,'grade_id','id');
     }
 }

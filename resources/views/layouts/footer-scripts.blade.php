@@ -22,6 +22,10 @@
 <script src="{{ asset('assets/src/plugins/src/tagify/tagify.min.js')}}"></script>
 
 <script src="{{ asset('assets/src/assets/js/apps/blog-create.js')}}"></script>
+
+{{--Jquery CND library--}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
 <!-- END PAGE LEVEL SCRIPTS -->
 
 @yield('js')

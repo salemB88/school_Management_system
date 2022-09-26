@@ -85,9 +85,22 @@ Grade::create([
      * @param  \App\Models\Grade  $grade
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Grade $grade)
+    public function update(Request $request)
     {
-        //
+
+        $grade=Grade::findOrFail($request->id);
+
+        $validated = $request->validate([
+            'name' => 'required|unique:grades,name,'.$request->id,
+        ],
+            [
+                'name.required' => __('Please enter the name of the grade'),
+            ]);
+
+        $grade->update($request->all());
+        session()->flash('success', __('Update grade successful'));
+        return redirect('/grade');
+
     }
 
     /**
@@ -96,8 +109,12 @@ Grade::create([
      * @param  \App\Models\Grade  $grade
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Grade $grade)
+    public function destroy(Request $request)
     {
-        //
+      $grade=Grade::findOrFail($request->id);
+
+      $grade->delete();
+        session()->flash('success', __('Delete grade successful'));
+        return redirect('/grade');
     }
 }
