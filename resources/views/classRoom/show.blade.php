@@ -48,19 +48,15 @@
 
 @section('content')
 
-                    <a class="btn btn-primary mb-3 mt-3" href="{{route('class_room.create')}}">{{__('Add Class Room')}}</a>
-                    <a class="btn btn-primary mb-3 mt-3" data-bs-toggle="modal" data-bs-target="#class-room-edit" data-placement="top" title="View">{{__('Add multi Grades')}}</a>
 
         <div class="widget-content widget-content-area blog-create-section">
-
+<h3>{{__('Students Information Of Section')}}</h3>
             <div class="table-responsive">
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col">{{__('ID')}}</th>
                         <th scope="col">{{__('Name')}}</th>
-                        <th scope="col">{{__('Description')}}</th>
-                        <th class="text-center" scope="col">{{__('Number of Section')}}</th>
                         <th class="text-center" scope="col"></th>
                     </tr>
                     <tr aria-hidden="true" class="mt-3 d-block table-row-hidden"></tr>
@@ -70,12 +66,12 @@
                         @php
                         $count=0;
                         @endphp
-                        @forelse($classRooms as $classRoom)
+                        @forelse($section as $sectionInfo)
                             <tr>
-                            <td>      <p class="mb-0">{{$count++}}</p>    </td>
-                            <td>      <p class="mb-0">{{$classRoom->name}}</p>    </td>
-                            <td>      <p class="mb-0">{{$classRoom->description}}</p>    </td>
-                                <td>      <p class="mb-0">{{count($classRoom->sections)}}</p>    </td>
+                            <td>      <p class="mb-0">{{$sectionInfo->id}}</p>    </td>
+                            <td>      <p class="mb-0">{{$sectionInfo->name}}</p>    </td>
+
+                                <td>      <p class="mb-0">0</p>    </td>
 
                         <td class="text-center">
                             <div class="action-btns">
@@ -180,6 +176,59 @@
 
 
 
+            <!-- Start add multi  classroom model -->
+            <div class="modal fade" id="add-multi" tabindex="" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">{{__('Edit Class Room Information')}}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                <svg> ... </svg>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+
+
+                            <form action="class_room/create" method="post">
+                                @method('POST')
+                                @csrf
+
+                                <div class="form-group mb-4">
+                                    <input type="hidden" name="id" id="id">
+
+                                    <label for="formGroupExampleInput">{{__('Class Room:')}}</label>
+                                    <input type="text" name="name" id="name" class="form-control" id="formGroupExampleInput" placeholder="" required>
+
+
+                                <!-- Default Input -->
+                                <label for="formGroupExampleInput">{{__('Grade:')}}</label>
+
+                                <select class="form-control mb-4" name="grade_id" id="grade_id">
+                                    @forelse($grades as $grade)
+                                        <option value="{{$grade->id}}">{{$grade->name}}</option>
+                                    @empty
+                                        <option selected disabled>{{__("EMPTY GRADES")}}</option>
+                                    @endforelse
+                                </select>
+
+                                <div class="form-group mb-4">
+                                    <label for="formGroupExampleInput2">{{__('Description:')}}</label>
+                                    <input type="text" name="description" class="form-control description" id="blog-description" placeholder="">
+                                </div>
+
+
+
+                                <input type="submit"  value="{{__('SAVE')}}" class="btn btn-primary">
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end edit garde model -->
+
+
 
 
 
@@ -274,6 +323,12 @@
 
 
 
+                    $('#add-multi').on('show.bs.modal', function(event) {
+
+                    })
+                    // $("#add-multi").click(function (){
+                    //     $('#myTable').append('<tr><td>my data</td><td>more data</td></tr>');
+                    // })
 
 
                 </script>

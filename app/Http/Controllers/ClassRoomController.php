@@ -17,6 +17,7 @@ class ClassRoomController extends Controller
     {
 
         $classRooms=ClassRoom::all();
+
         $grades=Grade::all();
      return view('classRoom.classRoom',compact('classRooms','grades'));
     }
@@ -115,8 +116,23 @@ class ClassRoomController extends Controller
     public function destroy(Request $request)
     {
         $classRoom=ClassRoom::findOrFail($request->id);
-        $classRoom->delete();
-                session()->flash('success', __('Delete class room successful'));
-        return redirect('/class_room');
+
+
+
+        //prevent delete action if the classroom have secion
+        if (count($classRoom->sections) > 0) {
+            session()->flash('error', __('Sorry, can not delete if there section in class room'));
+            return redirect('/class_room');
+
+        } else {
+            $classRoom->delete();
+            session()->flash('success', __('Delete class room successful'));
+            return redirect('/class_room');
+        }
+
+
+
     }
+
+
 }

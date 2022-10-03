@@ -34,7 +34,7 @@
                     <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="dashboard"> {{__('Main')}}</a></li>
-                            <li class="breadcrumb-item"><a href="class_room"> {{__('Class Room')}}</a></li>
+                            <li class="breadcrumb-item"><a href="sections"> {{__('Sections')}}</a></li>
                             <li class="breadcrumb-item active" aria-current="page">{{__('View')}}</li>
                         </ol>
                     </nav>
@@ -48,7 +48,7 @@
 
 @section('content')
 
-                    <a class="btn btn-primary mb-3 mt-3" href="{{route('class_room.create')}}">{{__('Add Class Room')}}</a>
+                    <a class="btn btn-primary mb-3 mt-3" data-bs-toggle="modal" data-bs-target="#section-add" data-placement="top">{{__('Add Section')}}</a>
                     <a class="btn btn-primary mb-3 mt-3" data-bs-toggle="modal" data-bs-target="#class-room-edit" data-placement="top" title="View">{{__('Add multi Grades')}}</a>
 
         <div class="widget-content widget-content-area blog-create-section">
@@ -59,8 +59,10 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">{{__('Name')}}</th>
-                        <th scope="col">{{__('Description')}}</th>
-                        <th class="text-center" scope="col">{{__('Number of Section')}}</th>
+                        <th scope="col">{{__('Class Room')}}</th>
+
+                        <th scope="col">{{__('Status')}}</th>
+                        <th class="text-center" scope="col">{{__('Number of Student')}}</th>
                         <th class="text-center" scope="col"></th>
                     </tr>
                     <tr aria-hidden="true" class="mt-3 d-block table-row-hidden"></tr>
@@ -70,12 +72,14 @@
                         @php
                         $count=0;
                         @endphp
-                        @forelse($classRooms as $classRoom)
+                        @forelse($sections as $section)
                             <tr>
                             <td>      <p class="mb-0">{{$count++}}</p>    </td>
-                            <td>      <p class="mb-0">{{$classRoom->name}}</p>    </td>
-                            <td>      <p class="mb-0">{{$classRoom->description}}</p>    </td>
-                                <td>      <p class="mb-0">{{count($classRoom->sections)}}</p>    </td>
+                            <td>      <p class="mb-0">{{$section->name}}</p>    </td>
+                                <td>      <p class="mb-0">{{$section->classRoom->name}}</p>    </td>
+
+                                <td><span class="badge badge-light-{{$section->status ==0 ? 'danger':'success'}}">{{$section->status ==0 ? __('Inactive'): __('Active')}}</span></td>
+                                <td>      <p class="mb-0">0</p>    </td>
 
                         <td class="text-center">
                             <div class="action-btns">
@@ -84,12 +88,12 @@
                                 </a>
 
 
-                                <a href="" class="action-btn btn-view bs-tooltip me-2" data-bs-toggle="modal" data-bs-target="#class-room-edit" data-placement="top" title="View"
-                                   data-id="{{$classRoom->id}}" data-name="{{$classRoom->name}}" data-description="{{$classRoom->description}}" data-grade_id="{{$classRoom->grade_id}}">
+                                <a href="{{route('section.show',$section->id)}}" class="action-btn btn-view bs-tooltip me-2"  data-placement="top" title="View"
+                                   data-id="{{$section->id}}" data-name="{{$section->name}}" data-status="{{$section->status}}" data-classRoom="{{$section->classRoom_id}}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>                                </a>
 
-                                <a href="" class="action-btn btn-delete bs-tooltip" data-bs-toggle="modal" data-bs-target="#class-room-delete" data-placement="top" title="Delete"
-                                   data-id="{{$classRoom->id}}" data-name="{{$classRoom->name}}">
+                                <a href="" class="action-btn btn-delete bs-tooltip" data-bs-toggle="modal" data-bs-target="#section-delete" data-placement="top" title="Delete"
+                                   data-id="{{$section->id}}" data-name="{{$section->name}}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                                 </a>
                  </div>
@@ -124,8 +128,74 @@
 
 
 
-            <!-- Start edit  classroom model -->
-            <div class="modal fade" id="class-room-edit" tabindex="" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <!-- Start section add  model -->
+            <div class="modal fade" id="section-add" tabindex="" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">{{__('Add Section')}}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                <svg> ... </svg>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+
+                            <form action="{{route('section.store')}}" method="post">
+                                @method('POST')
+
+
+                                @csrf
+
+                                <input type="hidden" name="id" id="id">
+
+                                <div class="form-group mb-4">
+                                    <label for="formGroupExampleInput">{{__('Section Name:')}}</label>
+                                    <input type="text" name="name" id="name" class="form-control" id="formGroupExampleInput" placeholder="" required>
+                                </div>
+
+
+
+                                <label for="formGroupExampleInput">{{__('Class Room:')}}</label>
+                                <select class="form-control mb-4" name="classRoom_id" required>
+                                    @forelse($classRooms as $classRoom)
+                                        <option value="{{$classRoom->id}}">{{$classRoom->name}}</option>
+                                    @empty
+                                        <option selected disabled>{{__("EMPTY GRADES")}}</option>
+                                    @endforelse
+                                </select>
+
+                                <div class="form-group mb-4">
+                                    <label for="formGroupExampleInput2">{{__('Status:')}}</label>
+                                    <select class="form-control mb-4" name="status" required>
+
+                                            <option value="0" >{{__("Inactive")}}</option>
+                                            <option  value="1">{{__("Active")}}</option>
+                                    </select>
+                                </div>
+
+
+                                <div class="modal-footer">
+                                    <button class="btn" data-bs-dismiss="modal"><i class="flaticon-cancel-12"></i> Discard</button>
+                                    <button type="submit"  class="btn btn-primary">Save</button>
+                                </div>
+                            </form>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+            </div>
+            <!-- end section add  model -->
+
+
+
+
+
+            <!-- Start add multi  classroom model -->
+            <div class="modal fade" id="add-multi" tabindex="" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -138,46 +208,13 @@
 
 
 
-                            <form action="class_room/update" method="post">
-                                @method('patch')
-                                    @csrf
-
-                                    <div class="form-group mb-4">
-                                        <input type="hidden" name="id" id="id">
-
-                                        <label for="formGroupExampleInput">{{__('Class Room:')}}</label>
-                                        <input type="text" name="name" id="name" class="form-control" id="formGroupExampleInput" placeholder="" required>
-                                    </div>
-
-                                    <!-- Default Input -->
-                                    <label for="formGroupExampleInput">{{__('Grade:')}}</label>
-
-                                    <select class="form-control mb-4" name="grade_id" id="grade_id">
-                                        @forelse($grades as $grade)
-                                            <option value="{{$grade->id}}">{{$grade->name}}</option>
-                                        @empty
-                                            <option selected disabled>{{__("EMPTY GRADES")}}</option>
-                                        @endforelse
-                                    </select>
-
-                                    <div class="form-group mb-4">
-                                        <label for="formGroupExampleInput2">{{__('Description:')}}</label>
-                                        <input type="text" name="description" class="form-control description" id="blog-description" placeholder="">
-                                    </div>
 
 
-
-                                    <input type="submit"  value="{{__('SAVE')}}" class="btn btn-primary">
-                                </form>
-
+                        </div>
                     </div>
                 </div>
             </div>
-            </div>
-            <!-- end edit classroom model -->
-
-
-
+            <!-- end edit garde model -->
 
 
 
@@ -186,7 +223,7 @@
 
 
             <!-- Start delete  classroom model -->
-                <div class="modal fade" id="class-room-delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="">
+                <div class="modal fade" id="section-delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -197,9 +234,7 @@
                             </div>
                             <div class="modal-body">
 
-
-
-                                <form action="class_room/destroy" method="post">
+                                <form action="section/destroy" method="post">
                                     @method('DELETE')
 
 
@@ -208,7 +243,7 @@
                                     <input type="hidden" name="id" id="id">
 
                                     <div class="form-group mb-4">
-                                        <label for="formGroupExampleInput">{{__('Are You Sure To Delete Class Room:')}}</label>
+                                        <label for="formGroupExampleInput">{{__('Are You Sure To Delete Section:')}}</label>
                                         <input type="text" name="name" id="name" class="form-control" id="formGroupExampleInput" placeholder="" disabled>
                                     </div>
                                     <div class="modal-footer">
@@ -217,6 +252,8 @@
                                     </div>
 
                                 </form>
+
+
 
                             </div>
                         </div>
@@ -245,7 +282,7 @@
                     // });
 
 
-                    $('#class-room-edit').on('show.bs.modal', function(event) {
+                    $('#section-edit').on('show.bs.modal', function(event) {
 
 
                         var button = $(event.relatedTarget)
@@ -260,7 +297,7 @@
                         modal.find('.modal-body .description').val(description);
                     })
 
-                    $('#class-room-delete').on('show.bs.modal', function(event) {
+                    $('#section-delete').on('show.bs.modal', function(event) {
 
                         var button = $(event.relatedTarget)
                         var id = button.data('id')
@@ -274,6 +311,24 @@
 
 
 
+                    $('#add-multi').on('show.bs.modal', function(event) {
+
+                        alert('s')
+
+                        // var button = $(event.relatedTarget)
+                        // var id = button.data('id')
+                        // var name = button.data('name')
+                        // var description = button.data('description')
+                        // var grade_id = button.data('grade_id')
+                        // var modal = $(this)
+                        // modal.find('.modal-body #id').val(id);
+                        // modal.find('.modal-body #name').val(name);
+                        // modal.find('.modal-body #grade_id').val(grade_id);
+                        // modal.find('.modal-body .description').val(description);
+                    })
+                    // $("#add-multi").click(function (){
+                    //     $('#myTable').append('<tr><td>my data</td><td>more data</td></tr>');
+                    // })
 
 
                 </script>

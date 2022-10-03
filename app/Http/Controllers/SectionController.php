@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ClassRoom;
 use App\Models\Grade;
+use App\Models\Section;
 use Illuminate\Http\Request;
 
-class GradeController extends Controller
+class SectionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,10 +16,13 @@ class GradeController extends Controller
      */
     public function index()
     {
-
+        $sections=Section::all();
         $grades=Grade::all();
+        $classRooms=ClassRoom::all();
 
-      return view('grades.grades',compact('grades'));
+        return  view('sections.sections',compact('sections','grades','classRooms'));
+
+
     }
 
     /**
@@ -27,7 +32,6 @@ class GradeController extends Controller
      */
     public function create()
     {
-        return view('grades.add');
 
     }
 
@@ -40,40 +44,46 @@ class GradeController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|unique:grades',
+            'name' => 'required|unique:sections',
+            'status' => 'required',
+            'classRoom_id' => 'required',
         ],
             [
-                'name.required' => __('Please enter the name of the grade'),
+                'name.required' => __('Please enter the name of the section'),
             ]);
 
-Grade::create([
-   'name'=>$request->name,
-    'description'=>$request->description
-]);
+        Section::create([
+            'name'=>$request->name,
+            'status'=>$request->status,
+            'classRoom_id'=>$request->classRoom_id,
+        ]);
 
-        session()->flash('success', __('Add grade successful'));
-        return redirect('/grade');
-
+        session()->flash('success', __('Add Section successful'));
+        return redirect('/section');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Grade  $grade
+     * @param  \App\Models\Section  $section
      * @return \Illuminate\Http\Response
      */
-    public function show(Grade $grade)
+    public function show(Section $section)
     {
-        //
+
+return view('classRoom.show',compact('section'));
+
+
+
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Grade  $grade
+     * @param  \App\Models\Section  $section
      * @return \Illuminate\Http\Response
      */
-    public function edit(Grade $grade)
+    public function edit(Section $section)
     {
         //
     }
@@ -82,47 +92,34 @@ Grade::create([
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Grade  $grade
+     * @param  \App\Models\Section  $section
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, Section $section)
     {
-
-        $grade=Grade::findOrFail($request->id);
-
-        $validated = $request->validate([
-            'name' => 'required|unique:grades,name,'.$request->id,
-        ],
-            [
-                'name.required' => __('Please enter the name of the grade'),
-            ]);
-
-        $grade->update($request->all());
-        session()->flash('success', __('Update grade successful'));
-        return redirect('/grade');
-
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Grade  $grade
+     * @param  \App\Models\Section  $section
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)
     {
-        $grade = Grade::findOrFail($request->id);
 
+        $section=Section::findOrFail($request->id);
 
-        //prevent delete action if the grade have classrooms
-        if (count($grade->class_rooms) > 0) {
+        //prevent delete action if the section have student
+        if (false) {
             session()->flash('error', __('Sorry, can not delete if there class room in grade'));
             return redirect('/grade');
 
         } else {
-            $grade->delete();
-            session()->flash('success', __('Delete grade successful'));
-            return redirect('/grade');
+            $section->delete();
+            session()->flash('success', __('Delete Section successful'));
+            return redirect('/section');
         }
     }
 }

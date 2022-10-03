@@ -26,6 +26,7 @@ Route::group(['middleware'=>['auth'],],
         Route::resource('grade','App\Http\Controllers\GradeController');
         Route::resource('class_room','App\Http\Controllers\ClassRoomController');
 
+        Route::resource('section','App\Http\Controllers\SectionController');
 
     });
 
