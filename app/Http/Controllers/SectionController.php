@@ -95,9 +95,25 @@ return view('classRoom.show',compact('section'));
      * @param  \App\Models\Section  $section
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Section $section)
+    public function update(Request $request)
     {
-        //
+
+        $section=Section::findOrFail($request->id);
+        $validated = $request->validate([
+            'name' => 'required|unique:sections,name,'.$request->id,
+            'status' => 'required',
+            'classRoom_id' => 'required',
+        ],
+            [
+                'name.required' => __('Please enter the name of the section'),
+            ]);
+
+        $section->update($request->all());
+        session()->flash('success', __('Update Section successful'));
+        return redirect('/section');
+
+
+
     }
 
     /**

@@ -35,7 +35,7 @@
 <!--  END CUSTOM STYLE FILE  -->
 
 
-
+@livewireStyles
 
 @yield('css')
 <!--- Style css -->

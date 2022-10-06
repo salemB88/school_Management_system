@@ -88,8 +88,8 @@
                                 </a>
 
 
-                                <a href="{{route('section.show',$section->id)}}" class="action-btn btn-view bs-tooltip me-2"  data-placement="top" title="View"
-                                   data-id="{{$section->id}}" data-name="{{$section->name}}" data-status="{{$section->status}}" data-classRoom="{{$section->classRoom_id}}">
+                                <a href="" class="action-btn btn-view bs-tooltip me-2"  data-placement="top" title="View" data-bs-toggle="modal" data-bs-target="#section-edit" data-placement="top"
+                                   data-id="{{$section->id}}" data-name="{{$section->name}}" data-status="{{$section->status}}" data-class_room="{{$section->classRoom_id}}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>                                </a>
 
                                 <a href="" class="action-btn btn-delete bs-tooltip" data-bs-toggle="modal" data-bs-target="#section-delete" data-placement="top" title="Delete"
@@ -111,6 +111,14 @@
 
                     </tbody>
                 </table>
+                <livewire:counter />
+
+
+
+
+
+
+
 
             </div>
 
@@ -194,18 +202,63 @@
 
 
 
-            <!-- Start add multi  classroom model -->
-            <div class="modal fade" id="add-multi" tabindex="" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+            <!-- Start section edit  model -->
+            <div class="modal fade" id="section-edit" tabindex="" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">{{__('Edit Class Room Information')}}</h5>
+                        <div class="modal-header btn-light-primary">
+                            <h5 class="modal-title b" id="exampleModalLabel">{{__('Add Section')}}</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                <svg> ... </svg>
+
+
+                                <svg class="svg-icon" viewBox="0 0 20 20">
+                                    <path d="M10.185,1.417c-4.741,0-8.583,3.842-8.583,8.583c0,4.74,3.842,8.582,8.583,8.582S18.768,14.74,18.768,10C18.768,5.259,14.926,1.417,10.185,1.417 M10.185,17.68c-4.235,0-7.679-3.445-7.679-7.68c0-4.235,3.444-7.679,7.679-7.679S17.864,5.765,17.864,10C17.864,14.234,14.42,17.68,10.185,17.68 M10.824,10l2.842-2.844c0.178-0.176,0.178-0.46,0-0.637c-0.177-0.178-0.461-0.178-0.637,0l-2.844,2.841L7.341,6.52c-0.176-0.178-0.46-0.178-0.637,0c-0.178,0.176-0.178,0.461,0,0.637L9.546,10l-2.841,2.844c-0.178,0.176-0.178,0.461,0,0.637c0.178,0.178,0.459,0.178,0.637,0l2.844-2.841l2.844,2.841c0.178,0.178,0.459,0.178,0.637,0c0.178-0.176,0.178-0.461,0-0.637L10.824,10z"></path>
+                                </svg>
                             </button>
                         </div>
                         <div class="modal-body">
 
+                            <form action="section/update" method="post">
+                                @method('patch')
+
+
+
+                                @csrf
+
+                                <input type="hidden" name="id" id="id">
+
+                                <div class="form-group mb-4">
+                                    <label for="formGroupExampleInput">{{__('Section Name:')}}</label>
+                                    <input type="text" name="name" id="name" class="form-control" id="formGroupExampleInput" placeholder="" required>
+                                </div>
+
+
+
+                                <label for="formGroupExampleInput">{{__('Class Room:')}}</label>
+                                <select class="form-control mb-4" id="classRoom_id" name="classRoom_id" required>
+                                    @forelse($classRooms as $classRoom)
+                                        <option value="{{$classRoom->id}}">{{$classRoom->name}}</option>
+                                    @empty
+                                        <option selected disabled>{{__("EMPTY GRADES")}}</option>
+                                    @endforelse
+                                </select>
+
+                                <div class="form-group mb-4">
+                                    <label for="formGroupExampleInput2">{{__('Status:')}}</label>
+                                    <select class="form-control mb-4" id="status" name="status" required>
+
+                                        <option value="0" >{{__("Inactive")}}</option>
+                                        <option  value="1">{{__("Active")}}</option>
+                                    </select>
+                                </div>
+
+
+                                <div class="modal-footer">
+                                    <button class="btn" data-bs-dismiss="modal"><i class="flaticon-cancel-12"></i> Discard</button>
+                                    <button type="submit"  class="btn btn-primary">Save</button>
+                                </div>
+                            </form>
 
 
 
@@ -214,8 +267,7 @@
                     </div>
                 </div>
             </div>
-            <!-- end edit garde model -->
-
+            <!-- end section edit  model -->
 
 
 
@@ -246,12 +298,14 @@
                                         <label for="formGroupExampleInput">{{__('Are You Sure To Delete Section:')}}</label>
                                         <input type="text" name="name" id="name" class="form-control" id="formGroupExampleInput" placeholder="" disabled>
                                     </div>
+                            </div>
+
                                     <div class="modal-footer">
                                         <button class="btn" data-bs-dismiss="modal"><i class="flaticon-cancel-12"></i>{{__('Cancel')}}</button>
                                         <button type="submit"  class="btn btn-danger">{{__('Delete')}}</button>
                                     </div>
 
-                                </form>
+                            </form>
 
 
 
@@ -259,6 +313,7 @@
                         </div>
                     </div>
                 </div>
+
                     <!-- end classroom garde model -->
 
 
@@ -288,13 +343,14 @@
                         var button = $(event.relatedTarget)
                         var id = button.data('id')
                         var name = button.data('name')
-                        var description = button.data('description')
-                        var grade_id = button.data('grade_id')
+                        var status = button.data('status')
+                        var class_id = button.data('class_room')
+
                         var modal = $(this)
                         modal.find('.modal-body #id').val(id);
                         modal.find('.modal-body #name').val(name);
-                        modal.find('.modal-body #grade_id').val(grade_id);
-                        modal.find('.modal-body .description').val(description);
+                        modal.find('.modal-body #classRoom_id').val(class_id);
+                        modal.find('.modal-body #status').val(status);
                     })
 
                     $('#section-delete').on('show.bs.modal', function(event) {

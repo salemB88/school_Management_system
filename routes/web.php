@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::group(['prefix' => LaravelLocalization::setLocale()], function()
+{
 Auth::routes();
 Route::get('/', function () {
 return view('dashboard');
@@ -28,7 +29,9 @@ Route::group(['middleware'=>['auth'],],
 
         Route::resource('section','App\Http\Controllers\SectionController');
 
+
+        Route::view('add_parents','livewire.show_form');
     });
 
 
-
+});
