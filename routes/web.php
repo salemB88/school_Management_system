@@ -30,7 +30,10 @@ Route::group(['middleware'=>['auth'],],
         Route::resource('section','App\Http\Controllers\SectionController');
 
 
-        Route::view('add_parents','livewire.show_form');
+//        Route::view('add_parents','livewire.parent.show_form');
+
+        Route::resource('parent','App\Http\Controllers\MyParentController');
+
     });
 
 

@@ -24,7 +24,7 @@ class MyParentController extends Controller
      */
     public function create()
     {
-        //
+     return view('livewire.parent.show_form');
     }
 
     /**

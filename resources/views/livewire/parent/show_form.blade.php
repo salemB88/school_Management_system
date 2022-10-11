@@ -2,6 +2,7 @@
 @section('title')
     {{__('المدارس')}}
 @stop
+
 @section('css')
 
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/src/plugins/src/stepper/bsStepper.min.css')}}"/>
@@ -43,7 +44,6 @@
 @section('content')
 
 
-        <div class="widget-content widget-content-area blog-create-section">
             <livewire:add-parents />
 
 
@@ -55,7 +55,29 @@
 
 
                 <script>
+                    /**
+                     * ====================
+                     * Multiple File Upload
+                     * ====================
+                     */
 
+                    // We want to preview images, so we register
+                    // the Image Preview plugin, We also register
+                    // exif orientation (to correct mobile image
+                    // orientation) and size validation, to prevent
+                    // large files from being added
+                    FilePond.registerPlugin(
+                        FilePondPluginImagePreview,
+                        FilePondPluginImageExifOrientation,
+                        FilePondPluginFileValidateSize,
+                        // FilePondPluginImageEdit
+                    );
+
+                    // Select the file input and use
+                    // create() to turn it into a pond
+                    FilePond.create(
+                        document.querySelector('.file-upload-multiple')
+                    );
                 </script>
 
                 <!-- BEGIN PAGE LEVEL SCRIPTS -->

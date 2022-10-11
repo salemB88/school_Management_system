@@ -142,7 +142,7 @@
                     </li>
 
                     <li>
-                        <a href="{{ url('/' . $page='add_parents') }}"> {{__('Add Parent')}} </a>
+                        <a href="{{ url('/' . $page='parent/create') }}"> {{__('Add Parent')}} </a>
                     </li>
 
 

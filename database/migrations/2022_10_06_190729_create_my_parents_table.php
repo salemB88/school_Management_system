@@ -31,6 +31,10 @@ return new class extends Migration
             $table->unsignedBigInteger('father_religion_id');
             $table->foreign('father_religion_id')->references('id')->on('religions')->onDelete('cascade');
 
+
+            $table->unsignedBigInteger('father_type_blood_id');
+            $table->foreign('father_type_blood_id')->references('id')->on('type_bloods')->onDelete('cascade');
+
             $table->string('father_address');
 
 
@@ -47,6 +51,10 @@ return new class extends Migration
 
             $table->unsignedBigInteger('mother_religion_id');
             $table->foreign('mother_religion_id')->references('id')->on('religions')->onDelete('cascade');
+
+
+            $table->unsignedBigInteger('mother_type_blood_id');
+            $table->foreign('mother_type_blood_id')->references('id')->on('type_bloods')->onDelete('cascade');
 
             $table->string('mother_address');
 
