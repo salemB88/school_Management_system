@@ -14,7 +14,7 @@ class MyParentController extends Controller
      */
     public function index()
     {
-        //
+        return view('livewire.parent.main');
     }
 
     /**
@@ -24,7 +24,7 @@ class MyParentController extends Controller
      */
     public function create()
     {
-     return view('livewire.parent.show_form');
+     return view('livewire.parent.main');
     }
 
     /**

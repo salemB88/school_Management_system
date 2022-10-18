@@ -22,4 +22,6 @@ class my_parent_attachment extends Model
     public function getFilePublicPath(){
         return 'parents/'.$this->my_parent_id.'/'.$this->file_name;
     }
+
+
 }

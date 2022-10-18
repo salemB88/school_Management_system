@@ -1,4 +1,7 @@
-
+<div class="row">
+@if($showTable)
+    @include('livewire.parent.table')
+@else
 <div id="wizard_Default" class="col-lg-12 layout-spacing">
     <div class="statbox widget box box-shadow">
         <div class="widget-header">
@@ -43,16 +46,28 @@
 
 
 
-                <div class="bs-stepper-content">
-                    @include('livewire.parent.father_form')
-                    @include('livewire.parent.mother_form')
-                    @include('livewire.parent.attachments_form')
-                </div>
+
+
+
+            <div class="bs-stepper-content">
+                @include('livewire.parent.table')
+                @include('livewire.parent.father_form')
+                @include('livewire.parent.mother_form')
+                @include('livewire.parent.attachments_form')
+
+
             </div>
 
 
-
-
         </div>
-    </div>
 
+
+
+
+
+
+    </div>
+</div>
+
+@endif
+</div>

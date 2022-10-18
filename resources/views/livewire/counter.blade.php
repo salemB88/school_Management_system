@@ -1,4 +1,6 @@
-<div>
+<div class="widget-content widget-content-area blog-create-section">
 
-    <h1>Hello liveWire</h1>
+
+    <button class="btn btn-secondary btn-nxt" wire:click="test">Next</button>
+
 </div>
