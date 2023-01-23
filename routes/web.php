@@ -34,6 +34,10 @@ Route::group(['middleware'=>['auth'],],
 
         Route::resource('parent','App\Http\Controllers\MyParentController');
 
+        Route::resource('teacher','App\Http\Controllers\TeacherController');
+
+        Route::get('test','App\Http\Controllers\MyParentController@test');
+
     });
 
 

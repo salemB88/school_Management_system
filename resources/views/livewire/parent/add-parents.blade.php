@@ -1,4 +1,8 @@
+
+
+
 <div class="row">
+
 @if($showTable)
     @include('livewire.parent.table')
 @else

@@ -47,7 +47,7 @@
                                     <button class="btn btn-secondary btn-prev me-3" wire:click="parentEdit({{$parent->id}})">Edit</button>
 
 
-                                    <button class="btn btn-secondary btn-prev me-3" wire:click="parentDelete({{$parent->id}})">Delete</button>
+                                     <button class="btn btn-secondary btn-prev me-3" wire:click="parentDelete({{$parent->id}})">Delete</button>
 
                                     </a>
                                 </div>

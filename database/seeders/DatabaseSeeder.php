@@ -3,7 +3,10 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\type_blood;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,11 +17,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        User::create([
+            'name'=>'sa',
+            'email'=>'sloom.888@gmail.com',
+            'password'=>Hash::make('6543223456'),
+                ]);
+
+$this->call(type_bloodSeeder::class);
+$this->call(religionSeeder::class);
+$this->call(nationalitieSeeder::class);
+$this->call(SpecializationSeeder::class);
+$this->call(GenderSeeder::class);
     }
 }

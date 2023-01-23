@@ -177,6 +177,7 @@ $mother_job,$mother_nationality_id,
 
     public function showAddForm(){
 
+        dd('d');
         $this->showTable=false;
 //        $this->currentStep++;
 
@@ -284,6 +285,9 @@ $mother_job,$mother_nationality_id,
        $parent->delete();
         session()->flash('success', __('Delete Parent Information successful'));
         return redirect('/parent');
+    }
+    public function test(){
+        dd('ss');
     }
 
 }
