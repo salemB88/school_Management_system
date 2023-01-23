@@ -1,5 +1,5 @@
 
-@livewireScripts
+
 
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
 <script src="{{ asset('assets/src/bootstrap/js/bootstrap.bundle.min.js')}}"></script>

@@ -4,6 +4,7 @@
 <div class="row">
 
 @if($showTable)
+
     @include('livewire.parent.table')
 @else
 <div id="wizard_Default" class="col-lg-12 layout-spacing">
