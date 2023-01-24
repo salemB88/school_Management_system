@@ -84,6 +84,6 @@ class MyParentController extends Controller
     }
 
     public function test(){
-        return view('livewire.test');
+        return view('test');
     }
 }
