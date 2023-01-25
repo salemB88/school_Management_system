@@ -111,7 +111,7 @@
 
                     </tbody>
                 </table>
-                <livewire:counter />
+
 
 
 

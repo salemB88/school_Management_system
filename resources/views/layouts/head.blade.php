@@ -36,6 +36,7 @@
 
 
 @livewireStyles
+@livewireScripts
 
 @yield('css')
 <!--- Style css -->

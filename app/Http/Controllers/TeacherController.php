@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\my_parent;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 
-class MyParentController extends Controller
+class TeacherController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class MyParentController extends Controller
      */
     public function index()
     {
-        return view('livewire.parent.main');
+   dd('d');
     }
 
     /**
@@ -24,7 +24,7 @@ class MyParentController extends Controller
      */
     public function create()
     {
-     return view('livewire.parent.main');
+        //
     }
 
     /**
@@ -41,10 +41,10 @@ class MyParentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\my_parent  $my_parent
+     * @param  \App\Models\Teacher  $teacher
      * @return \Illuminate\Http\Response
      */
-    public function show(my_parent $my_parent)
+    public function show(Teacher $teacher)
     {
         //
     }
@@ -52,10 +52,10 @@ class MyParentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\my_parent  $my_parent
+     * @param  \App\Models\Teacher  $teacher
      * @return \Illuminate\Http\Response
      */
-    public function edit(my_parent $my_parent)
+    public function edit(Teacher $teacher)
     {
         //
     }
@@ -64,10 +64,10 @@ class MyParentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\my_parent  $my_parent
+     * @param  \App\Models\Teacher  $teacher
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, my_parent $my_parent)
+    public function update(Request $request, Teacher $teacher)
     {
         //
     }
@@ -75,13 +75,11 @@ class MyParentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\my_parent  $my_parent
+     * @param  \App\Models\Teacher  $teacher
      * @return \Illuminate\Http\Response
      */
-    public function destroy(my_parent $my_parent)
+    public function destroy(Teacher $teacher)
     {
         //
     }
-
-
 }

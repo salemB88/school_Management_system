@@ -18,11 +18,25 @@
                    data-allow-reorder="true"
                    data-max-file-size="3MB"
                    data-max-files="3">
-            <div>
-                <h5 class="card-title">{{__('Click To Complete Submit Forms')}}</h5>
-                <button class="btn btn-primary mb-2 me-4" wire:click="submitForm"  >{{__('Submit')}}</button>
 
-            </div>
+            @if($updateMode)
+
+
+                <div>
+                    <h5 class="card-title">{{__('Click To Complete Edit Parent Forms')}}</h5>
+                    <button class="btn btn-primary mb-2 me-4" wire:click="submitEditParent"  >{{__('Edit')}}</button>
+                </div>
+
+@else
+                <div>
+                    <h5 class="card-title">{{__('Click To Complete Submit Forms')}}</h5>
+                    <button class="btn btn-primary mb-2 me-4" wire:click="submitAddParent"  >{{__('Submit')}}</button>
+                </div>
+@endif
+
+
+
+
 @else
 @endif
 
