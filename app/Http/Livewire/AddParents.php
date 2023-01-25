@@ -177,11 +177,9 @@ $mother_job,$mother_nationality_id,
 
     public function showAddForm(){
 
-        dd('d');
-        $this->showTable=false;
-//        $this->currentStep++;
 
-//        $this->showForm=false;
+        $this->showTable=false;
+
 
 
     }
@@ -270,6 +268,8 @@ $mother_job,$mother_nationality_id,
                 $attachments->save();
                 $file->storeAs('public/parents/' . $parent_id, $file_name);
             }
+
+
         }
 
 
@@ -286,8 +286,6 @@ $mother_job,$mother_nationality_id,
         session()->flash('success', __('Delete Parent Information successful'));
         return redirect('/parent');
     }
-    public function test(){
-        dd('ss');
-    }
+
 
 }

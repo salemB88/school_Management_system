@@ -34,6 +34,7 @@
         @include('layouts.flush-massage')
 				@yield('content')
 
+
     </div>
 
     </div>

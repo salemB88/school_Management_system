@@ -1,8 +1,0 @@
-
-
-                    @livewireStyles
-                    <livewire:test />
-
-
-                    @livewireScripts
-

@@ -83,7 +83,5 @@ class MyParentController extends Controller
         //
     }
 
-    public function test(){
-        return view('test');
-    }
+
 }
