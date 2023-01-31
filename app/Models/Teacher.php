@@ -10,6 +10,7 @@ class Teacher extends Model
 {
     use HasFactory,  HasFactory,   HasTranslations;
     protected $guarded=[];
+    public $translatable = ['name'];
 
     public function gender(){
         return $this->belongsTo(Gender::class,'gender_id','id');
@@ -17,5 +18,9 @@ class Teacher extends Model
 
     public function specialization(){
         return $this->belongsTo(Specialization::class,'specialization_id','id');
+    }
+
+    public function sections(){
+        return $this->belongsToMany(Section::class,'teacher_sections');
     }
 }

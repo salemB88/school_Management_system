@@ -25,6 +25,7 @@ return new class extends Migration
 
             $table->bigInteger('gender_id')->unsigned();
             $table->foreign('gender_id')->references('id')->on('genders')->onDelete('cascade');
+
             $table->date('joining_date');
             $table->text('address');
             $table->timestamps();

@@ -88,39 +88,17 @@
                                 </a>
 
 
-                                <a href="" class="action-btn btn-view bs-tooltip me-2"  data-placement="top" title="View" data-bs-toggle="modal" data-bs-target="#section-edit" data-placement="top"
-                                   data-id="{{$section->id}}" data-name="{{$section->name}}" data-status="{{$section->status}}" data-class_room="{{$section->classRoom_id}}">
+                                <a href="" class="action-btn btn-view bs-tooltip me-2"  data-placement="top" title="View" data-bs-toggle="modal" data-bs-target="#edit{{ $section->id }}" data-placement="top">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>                                </a>
 
-                                <a href="" class="action-btn btn-delete bs-tooltip" data-bs-toggle="modal" data-bs-target="#section-delete" data-placement="top" title="Delete"
+                                {{-- <a href="" class="action-btn btn-delete bs-tooltip" data-bs-toggle="modal" data-bs-target="#section-delete" data-placement="top" title="Delete"
                                    data-id="{{$section->id}}" data-name="{{$section->name}}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                                </a>
+                                </a> --}}
                  </div>
                         </td>
 
                             </tr>
-
-                        @empty
-                            <tr>     <td colspan="4" class="text-center">     <h1>Empty</h1> </td></tr>
-
-                        @endforelse
-
-
-
-
-                    </tbody>
-                </table>
-
-
-
-
-
-
-
-
-
-            </div>
 
 
 
@@ -204,11 +182,11 @@
 
 
             <!-- Start section edit  model -->
-            <div class="modal fade" id="section-edit" tabindex="" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="edit{{ $section->id }}" tabindex="" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header btn-light-primary">
-                            <h5 class="modal-title b" id="exampleModalLabel">{{__('Add Section')}}</h5>
+                            <h5 class="modal-title b" id="exampleModalLabel">{{__('sections.edit')}}</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 
 
@@ -219,7 +197,7 @@
                         </div>
                         <div class="modal-body">
 
-                            <form action="section/update" method="post">
+                            <form action="{{Route('section.update',$section->id)}}" method="post">
                                 @method('patch')
 
 
@@ -230,7 +208,7 @@
 
                                 <div class="form-group mb-4">
                                     <label for="formGroupExampleInput">{{__('Section Name:')}}</label>
-                                    <input type="text" name="name" id="name" class="form-control" id="formGroupExampleInput" placeholder="" required>
+                                    <input type="text" name="name" id="name" class="form-control" id="formGroupExampleInput" placeholder="" value="{{ $section->name }}" required>
                                 </div>
 
 
@@ -238,7 +216,8 @@
                                 <label for="formGroupExampleInput">{{__('Class Room:')}}</label>
                                 <select class="form-control mb-4" id="classRoom_id" name="classRoom_id" required>
                                     @forelse($classRooms as $classRoom)
-                                        <option value="{{$classRoom->id}}">{{$classRoom->name}}</option>
+                                        <option value="{{$classRoom->id}}"
+                                            {{ $classRoom->id == $section->classRoom_id ? 'selected' : ''  }} >{{$classRoom->name}}</option>
                                     @empty
                                         <option selected disabled>{{__("EMPTY GRADES")}}</option>
                                     @endforelse
@@ -248,8 +227,30 @@
                                     <label for="formGroupExampleInput2">{{__('Status:')}}</label>
                                     <select class="form-control mb-4" id="status" name="status" required>
 
-                                        <option value="0" >{{__("Inactive")}}</option>
-                                        <option  value="1">{{__("Active")}}</option>
+                                        <option value="0"  {{ $section->status == 0  ? 'selected' : ''  }} >{{__("Inactive")}}</option>
+                                        <option  value="1" {{ $section->status == 1 ? 'selected' : ''  }} >{{__("Active")}}</option>
+                                    </select>
+                                </div>
+
+
+                                <div class="form-group mb-4">
+                                    <label for="formGroupExampleInput2">{{__('section.teachers:')}}</label>
+                                    <select class="form-control mb-4" id="teachers" name="teachers[]"  multiple >
+
+{{--                                        @forelse($section->teachers as $teacher)--}}
+{{--                                        <option selected value="{{ $teacher->id }}"> {{ $teacher->name}} </option>--}}
+{{--                                        @empty--}}
+
+{{--                                        @endforelse--}}
+
+                                            @forelse($teachers  as $teacher)
+                                                <option value="{{ $teacher->id }}" {{ $section->teachers->contains('id',$teacher->id) ? 'selected' : '' }}> {{ $teacher->name}} </option>
+                                            @empty
+
+                                            @endforelse
+
+
+
                                     </select>
                                 </div>
 
@@ -318,9 +319,30 @@
 
 
 
+                    @empty
+                    <tr>     <td colspan="4" class="text-center">     <h1>Empty</h1> </td></tr>
+
+                @endforelse
 
 
-                @endsection
+
+
+            </tbody>
+        </table>
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+    @endsection
         @section('js')
 
 
@@ -337,21 +359,21 @@
                     // });
 
 
-                    $('#section-edit').on('show.bs.modal', function(event) {
+                    // $('#section-edit').on('show.bs.modal', function(event) {
 
 
-                        var button = $(event.relatedTarget)
-                        var id = button.data('id')
-                        var name = button.data('name')
-                        var status = button.data('status')
-                        var class_id = button.data('class_room')
+                    //     var button = $(event.relatedTarget)
+                    //     var id = button.data('id')
+                    //     var name = button.data('name')
+                    //     var status = button.data('status')
+                    //     var class_id = button.data('class_room')
 
-                        var modal = $(this)
-                        modal.find('.modal-body #id').val(id);
-                        modal.find('.modal-body #name').val(name);
-                        modal.find('.modal-body #classRoom_id').val(class_id);
-                        modal.find('.modal-body #status').val(status);
-                    })
+                    //     var modal = $(this)
+                    //     modal.find('.modal-body #id').val(id);
+                    //     modal.find('.modal-body #name').val(name);
+                    //     modal.find('.modal-body #classRoom_id').val(class_id);
+                    //     modal.find('.modal-body #status').val(status);
+                    // })
 
                     $('#section-delete').on('show.bs.modal', function(event) {
 

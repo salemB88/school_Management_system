@@ -11,12 +11,16 @@ class Section extends Model
 {
     use HasFactory, SoftDeletes,  Notifiable;
 
-    protected $guarded=[];
+    protected $guarded = [];
 
 
-    public function classRoom(){
-        return $this->belongsTo(ClassRoom::class,'classRoom_id','id');
+    public function classRoom()
+    {
+        return $this->belongsTo(ClassRoom::class, 'classRoom_id', 'id');
     }
 
-
+    public function teachers()
+    {
+        return $this->belongsToMany(Teacher::class, 'teacher_sections');
+    }
 }
