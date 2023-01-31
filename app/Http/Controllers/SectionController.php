@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ClassRoom;
 use App\Models\Grade;
 use App\Models\Section;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 
 class SectionController extends Controller
@@ -19,8 +20,8 @@ class SectionController extends Controller
         $sections=Section::all();
         $grades=Grade::all();
         $classRooms=ClassRoom::all();
-
-        return  view('sections.sections',compact('sections','grades','classRooms'));
+        $teachers=Teacher::all();
+        return  view('sections.sections',compact('sections','grades','classRooms','teachers'));
 
 
     }
@@ -95,12 +96,14 @@ return view('classRoom.show',compact('section'));
      * @param  \App\Models\Section  $section
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Section $section, Request $request)
     {
 
-        $section=Section::findOrFail($request->id);
+
+
+
         $validated = $request->validate([
-            'name' => 'required|unique:sections,name,'.$request->id,
+            'name' => 'required|unique:sections,name,'.$section->id,
             'status' => 'required',
             'classRoom_id' => 'required',
         ],
@@ -108,7 +111,12 @@ return view('classRoom.show',compact('section'));
                 'name.required' => __('Please enter the name of the section'),
             ]);
 
-        $section->update($request->all());
+        $section->update([
+            'name'=>$request->get('name'),
+            'status'=>$request->get('status'),
+            'classRoom_id'=>$request->get('classRoom_id'),
+        ]);
+        $section->teachers()->sync($request->teachers);
         session()->flash('success', __('Update Section successful'));
         return redirect('/section');
 
