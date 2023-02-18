@@ -114,6 +114,7 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        //
+        $this->Student->deleteStudent($student);
+        return redirect('/student');
     }
 }
