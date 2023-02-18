@@ -119,9 +119,26 @@ public function updateStudent($request, Student $student)
 
 
         session()->flash('success', __('Update Student successful'));
-    } catch (Exception $e) {
-        return redirect()->back()->with(['error' => $e->getMessage()]);
+    } catch (Exception $exception) {
+        return redirect()->back()->with(['error' => $exception->getMessage()]);
     }
+}
+
+public function deleteStudent(Student $student)
+
+
+{
+
+    try {
+        $student->delete();
+        session()->flash('success', __('Delete Student successful'));
+
+    } catch (Exception $exception){
+        return redirect()->back()->with(['error' => $exception->getMessage()]);
+
+    }
+
+
 }
 
 

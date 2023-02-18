@@ -28,5 +28,7 @@ interface StudentRepositoryInterface
 
     public function getParents();
 
+    public function deleteStudent(Student $student);
+
 
 }
