@@ -26,7 +26,7 @@ class TeacherRepository implements TeacherRepositoryInterface
     {
         return Specialization::all();
 
-        
+
     }
 
     public function getGenders()
@@ -82,7 +82,7 @@ class TeacherRepository implements TeacherRepositoryInterface
             $teacher->joining_date = $request->get('joining_date');
             $teacher->address = $request->get('address');
             $teacher->save();
-
+            $teacher->sections()->sync($request->sections);
 
             session()->flash('success', __('Update Teacher successful'));
         } catch (Exception $e) {

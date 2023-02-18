@@ -92,9 +92,8 @@
 
                             <option selected disabled>{{__("SELECT")}}</option>
                             @forelse($specializations as $specialization)
-                                <option value="{{$specialization->id}}"
-                                    {{ $teacher->specialization_id==$specialization->id ? 'selected' : '' }}
-                                >{{$specialization->name}}</option>
+                                <option value="{{$specialization->id}}" @selected($teacher->specialization_id==$specialization->id)
+                                    >{{$specialization->name}}</option>
                             @empty
                                 <option selected disabled>{{__("EMPTY Specialization")}}</option>
                             @endforelse
@@ -112,7 +111,7 @@
                             <option selected disabled>{{__("SELECT")}}</option>
                             @forelse($genders as $gender)
                                 <option value="{{$gender->id}}"
-                                        {{ $gender->id = $teacher->gender_id ? 'selected' : '' }}
+                                        @selected( $gender->id== $teacher->gender_id )
                                 >{{$gender->name}}</option>
                             @empty
                                 <option selected disabled>{{__("EMPTY Gander")}}</option>
