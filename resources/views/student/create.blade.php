@@ -38,7 +38,7 @@
         <div class="widget-content widget-content-area blog-create-section">
 
 
-            <form action="{{ route('student.store') }}" method="post">
+            <form action="{{ route('student.store') }}" method="post" enctype="multipart/form-data">
                 @method('POST')
                 @csrf
 
@@ -196,17 +196,35 @@
                         <label for="defaultForm-father_passport_id">{{__('Academic Year')}}:</label>
                         <input  type="date" name="academic_year"   class="form-control {{ $errors->has('academic_year') ? ' is-invalid' : '' }}"
                                 id="defaultForm-name"  value="{{old('academic_year')}}" >
-                    </div>
+
+
+
 
 
         </div>
 
 
+
+{{--                    <div class="multiple-file-upload">--}}
+{{--                        <input type="file"--}}
+{{--                               class="filepond file-upload-multiple"--}}
+{{--                               name="photos[]"--}}
+{{--                               accept="image/*"--}}
+{{--                               multiple--}}
+{{--                               data-max-files="3">--}}
+{{--                    </div>--}}
+
+
+                    <div class="row mb-4">
+
+                        <input type="file" accept="image/*" multiple name="photos[]">
+
+                    </div>
+
                 <input type="submit"  class="btn btn-primary">
 
 
             </form>
-
 
 
 

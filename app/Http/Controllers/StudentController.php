@@ -55,7 +55,8 @@ class StudentController extends Controller
      */
     public function store(StoreStudentRequest   $request)
     {
-        $this->Student->storeStudent($request);
+
+        $this->Student->store($request);
 
         return redirect('/student');
     }
@@ -102,7 +103,7 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
-        $this->Student->updateStudent($request,$student);
+        $this->Student->update($request,$student);
         return redirect('/student');
     }
 
@@ -114,7 +115,7 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        $this->Student->deleteStudent($student);
+        $this->Student->delete($student);
         return redirect('/student');
     }
 }

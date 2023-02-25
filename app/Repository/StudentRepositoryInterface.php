@@ -8,9 +8,9 @@ interface StudentRepositoryInterface
 {
 
 
-    public function storeStudent($request);
+    public function store($request);
 
-    public function updateStudent($request, Student $student);
+    public function update($request, Student $student);
 
     public function getStudents();
 
@@ -28,7 +28,7 @@ interface StudentRepositoryInterface
 
     public function getParents();
 
-    public function deleteStudent(Student $student);
+    public function delete(Student $student);
 
 
 }
